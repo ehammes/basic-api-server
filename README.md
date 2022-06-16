@@ -1,12 +1,12 @@
-# LAB - Class 02
+# LAB - Class 03
 
-## Project: basic-express-server
+## Project: basic-api-server
 
 ### Author: Elizabeth Hammes
 
 ### Problem Domain  
 
-Building a basic Express server
+Building a basic api server
 
 ### Links and Resources
 
@@ -19,6 +19,7 @@ Building a basic Express server
 #### `.env` requirements (where applicable)
 
 - `PORT` - 3001
+- DATABASE_URL
 
 #### How to initialize/run your application (where applicable)
 
@@ -28,8 +29,9 @@ Building a basic Express server
 
 #### Features / Routes
 
-- GET : `/person` - specific route to hit
+- GET : `/pets` - specific route to hit
+- GET : `/animals` - specific route to hit
 
 #### Tests
 
-- Run tests using `npm start`
+- Run tests using `npm test'
