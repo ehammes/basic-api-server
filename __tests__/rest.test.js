@@ -13,31 +13,46 @@ afterAll(async () => {
   await sequelize.drop();
 });
 
+let pet = {
+  name: 'test',
+  breed: 'labrador',
+  age: 4,
+};
+
 // pet
 describe('Testing REST API', () => {
 
   test('Create a pet', async () => {
-    let response = await mockRequest.post('/pets').send({
-      name: 'test',
-      breed: 'labrador',
-      age: 4,
-    });
+    let response = await mockRequest.post('/pets').send(pet);
 
     expect(response.status).toEqual(200);
     expect(response.body.name).toEqual('test');
     expect(response.body.breed).toEqual('labrador');
     expect(response.body.age).toEqual(4);
   });
-  test('Should read from pet', () => {
-    expect(true).toBe(false);
+
+  test('Should get all pets', async () => {
+    let response = await mockRequest.get('/pets');
+    
+    expect(response.status).toEqual(200);
   });
 
-  test('Should update a pet', () => {
-    expect(true).toBe(false);
+  test('Should get a pet', async () => {
+    let response = await mockRequest.get(`/pets/1`);
+
+    expect(response.status).toEqual(200);
   });
 
-  test('Should delete a pet', () => {
-    expect(true).toBe(false);
+  test('Should update a pet', async () => {
+    let response = await mockRequest.put('/pets/1');
+ 
+    expect(response.status).toEqual(200);
+  });
+
+  test('Should delete a pet', async() => {
+    let response = await mockRequest.delete('/pets/1');
+
+    expect(response.status).toEqual(200);
   });
 });
 
@@ -56,15 +71,27 @@ describe('Testing REST API', () => {
     expect(response.body.classification).toEqual('Mammal');
     expect(response.body.numberLegs).toEqual(4);
   });
-  test('Should read from animals', () => {
-    expect(true).toBe(false);
+  test('Should get all animals', async () => {
+    let response = await mockRequest.get('/animals');
+    
+    expect(response.status).toEqual(200);
   });
 
-  test('Should update an animal', () => {
-    expect(true).toBe(false);
+  test('Should get an animal', async () => {
+    let response = await mockRequest.get(`/animals/1`);
+
+    expect(response.status).toEqual(200);
   });
 
-  test('Should delete an animal', () => {
-    expect(true).toBe(false);
+  test('Should update an animal', async () => {
+    let response = await mockRequest.put('/animals/1');
+ 
+    expect(response.status).toEqual(200);
+  });
+
+  test('Should delete an animal', async() => {
+    let response = await mockRequest.delete('/animals/1');
+
+    expect(response.status).toEqual(200);
   });
 });

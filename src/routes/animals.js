@@ -16,36 +16,32 @@ router.post('/animals', async(req, res, next) => {
 
 // READ Animal
 router.get('/animals', async (req, res, next) => {
-  let response = await AnimalsSchema.findAll();
-  response.status(200).send(response);
+  let allAnimals = await AnimalsSchema.findAll();
+  res.status(200).send(allAnimals);
 });
 
 // READ 1 animal
-
-
-
-
-// UPDATE Animal
-router.put('/animals', async (req, res, next) => {
-  let updatedAnimals = await AnimalsSchema.update({
-    animalType: updatedAnimals.body.animalType,
-    classification: updatedAnimals.body.classification,
-    numberLegs: updatedAnimals.body.numberLegs,
-  }, {
-    where: {
-      animalType: null,
-      classification: null,
-      numberLegs: null,
-    },
-  });
-  res.status(200).send(updatedAnimals);
+router.get('/animals/:id', async (req, res, next) => {
+  let { id } = req.params;
+  let oneAnimal = await AnimalsSchema.findOne({where: {id: id}});
+  res.status(200).send(oneAnimal);
 });
 
-// DELETE Animal
-router.delete('/animals', async (req, res, next) => {
-  let deletedAnimal = await AnimalsSchema.destroy({
-    truncate: true,
-  });
+
+// UPDATE animal
+router.put('/animals/:id', async (req, res, next) => {
+  let { id } = req.params;
+  await AnimalsSchema.update(req.body, {where: { id }});
+  let updateAnimal = await AnimalsSchema.findOne({where: { id }});
+  res.status(200).send(updateAnimal);
+});
+
+// DELETE animal
+router.delete('/animals/:id', async (req, res, next) => {
+  let { id } = req.params;
+  let deletedAnimal = await AnimalsSchema.findOne({where: { id }});
+  await AnimalsSchema.destroy({where: { id }});
   res.status(200).send(deletedAnimal);
 });
+
 module.exports = router;

@@ -16,39 +16,31 @@ router.post('/pets', async (req, res, next) => {
 
 // READ all Pets
 router.get('/pets', async (req, res, next) => {
-  let response = await PetsSchema.findAll();
-  response.status(200).send(response);
+  let allPets = await PetsSchema.findAll();
+  res.status(200).send(allPets);
 });
 
 // READ 1 pet
-
-
-
+router.get('/pets/:id', async (req, res, next) => {
+  let { id } = req.params;
+  let onePet = await PetsSchema.findOne({where: {id: id}});
+  res.status(200).send(onePet);
+});
 
 
 // UPDATE Pet
-router.put('/pets', async (req, res, next) => {
-  let updatedPets = await PetsSchema.update({
-    name: updatedPets.body.name,
-    animalType: updatedPets.body.animalType,
-    breed: updatedPets.body.breed,
-    age: updatedPets.body.age,
-  }, {
-    where: {
-      name: null,
-      animalType: null,
-      breed: null,
-      age: null,
-    },
-  });
-  res.status(200).send(updatedPets);
+router.put('/pets/:id', async (req, res, next) => {
+  let { id } = req.params;
+  await PetsSchema.update(req.body, {where: { id }});
+  let updatePets = await PetsSchema.findOne({where: { id }});
+  res.status(200).send(updatePets);
 });
 
 // DELETE Pet
-router.delete('/pets', async (req, res, next) => {
-  let deletedPet = await PetsSchema.destroy({
-    truncate: true,
-  });
+router.delete('/pets/:id', async (req, res, next) => {
+  let { id } = req.params;
+  let deletedPet = await PetsSchema.findOne({where: { id }});
+  await PetsSchema.destroy({where: { id }});
   res.status(200).send(deletedPet);
 });
 
