@@ -7,6 +7,7 @@ const logger = require('./middleware/logger');
 const petsRouter = require('./routes/pets');
 const animalsRouter = require('./routes/animals');
 const app = express();
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3002;
 
